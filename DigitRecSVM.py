@@ -14,7 +14,7 @@ from sklearn.svm import SVC
 from sklearn.svm import LinearSVC
 from sklearn.svm import LinearSVR
 import matplotlib.pyplot as plt
-import  pandas as pd
+import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import Binarizer
 
@@ -49,9 +49,10 @@ if __name__ == '__main__':
     train_images, vali_images, train_labels, vali_labels = \
         train_test_split(X_train, Y_train, train_size=0.95,random_state=1)
     print('start predict')
-    predict = LinearSVC(C=0.25)
+
+    predict = LinearSVC(C=0.1,tol=1e-5)
     predict.fit(train_images,train_labels)
-    print('acc:{}'.format(predict.score(train_images, train_labels)))
-    print('acc:{}'.format(predict.score(vali_images, vali_labels)))
+    print('acc:{}'.format(predict.score(train_images,train_labels)))
+    print('acc:{}'.format(predict.score(vali_images,vali_labels)))
     res_data = np.array(predict.predict(X_test))
     Data_writer.write_data_without_index(res_data, 'submissionSVM.csv', columns=('Label',),index_name='ImageId')
