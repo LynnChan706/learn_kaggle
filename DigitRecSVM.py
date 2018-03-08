@@ -49,6 +49,7 @@ if __name__ == '__main__':
     train_images, vali_images, train_labels, vali_labels = \
         train_test_split(X_train, Y_train, train_size=0.95,random_state=1)
     print('start predict')
+
     predict = LinearSVC(C=0.25)
     predict.fit(train_images,train_labels)
     print('acc:{}'.format(predict.score(train_images, train_labels)))
