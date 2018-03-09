@@ -4,7 +4,7 @@
 '''
 @date = '17/12/1'
 @author = 'lynnchan'
-@email = 'chenliang@moutum.com'
+@email = 'ccchen706@126.com'
 '''
 
 import pandas as pd
@@ -22,6 +22,13 @@ class CsvReader():
         read_data=pd.read_csv(file_path_name)
         # print(read_data.head())
         return read_data
+
+    def read_data_chunk(self,file_name,chunkSize=5):
+        file_path_name=self.csv_dict+file_name
+        read_data_chunk=pd.read_csv(file_path_name,chunksize=chunkSize)
+        # print(read_data.head())
+        return read_data_chunk
+
 
     def write_data_without_index(self,res_data,file_name,columns=None,index_name='',index_start=1,):
         file_path_name = self.csv_dict + file_name
