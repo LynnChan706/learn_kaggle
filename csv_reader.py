@@ -9,6 +9,11 @@
 
 import pandas as pd
 import os
+import random
+import numpy as np
+
+from numpy import random as nr
+
 class CsvReader():
     def __init__(self,dic=''):
         if dic is not '':
@@ -28,6 +33,25 @@ class CsvReader():
         read_data_chunk=pd.read_csv(file_path_name,chunksize=chunkSize)
         # print(read_data.head())
         return read_data_chunk
+
+    def read_data_with_number(self,file_name,read_num=500000):
+
+        print('start')
+        x = np.arange(1,200000000)
+
+        skiprow = nr.choice(x, 200000000-read_num,replace = False)
+        print('end')
+        file_path_name=self.csv_dict+file_name
+        read_data = pd.read_csv(file_path_name, nrows=read_num, skiprows=skiprow)
+        print('read data end')
+        return read_data
+
+    def read_data_with_random(self,file_name,read_num=2000000):
+        skiprow = random.randint(100000000,200000000)
+        file_path_name=self.csv_dict+file_name
+        read_data = pd.read_csv(file_path_name,nrows =read_num, skiprows=range(1, skiprow))
+        return read_data
+
 
 
     def write_data_without_index(self,res_data,file_name,columns=None,index_name='',index_start=0,):

@@ -18,11 +18,12 @@ from sklearn.svm import LinearSVR
 from sklearn.linear_model import SGDClassifier
 from sklearn.tree import DecisionTreeClassifier
 import matplotlib.pyplot as plt
+
 import pandas as pd
 import random
 from sklearn.naive_bayes import MultinomialNB,BernoulliNB
-from sklearn.metrics import roc_auc_score
-
+from sklearn.metrics import roc_auc_score,roc_curve
+from sklearn import  metrics
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import Binarizer
 
@@ -36,6 +37,11 @@ clfdir={'MNB':MultinomialNB(),
         'PT':Perceptron(),
         'SG':SGDClassifier(),
         'PAC':PassiveAggressiveClassifier()}
+
+
+# clfdir={'MNB':MultinomialNB(),
+#         'BNB':BernoulliNB()}
+
 
 def get_next_data(train_data_chunk,persent=1,number=20000):
     print('get_next_data ')
@@ -99,7 +105,9 @@ if __name__ == '__main__':
             #     train_test_split(X_train_text, y_train, train_size=0.90, random_state=1)
             predict.partial_fit(X_train_text, y_train, classes=all_classes)
             # vali_data = get_next_data_without_persent(train_data_chunk)
-            pre_res_data = np.array(predict.predict_proba(X_test))
+            # pre_res_data = (np.array(predict.predict(X_test)))[:,1]
+            pre_res_data = (np.array(predict.predict(X_test)))
+            # print('shape',pre_res_data.shape)
             idx = 0
             idx_diff = 0
             # for inum,v in enumerate(pre_res_data):
@@ -108,7 +116,7 @@ if __name__ == '__main__':
             #         idx_diff+=1
             #         if v == 1:
             #             idx+=1
-            socer_roc=roc_auc_score(Y_test.values,pre_res_data)
+            socer_roc=metrics.roc_auc_score(Y_test.values,pre_res_data)
 
             print('test data res::',socer_roc)
 
@@ -138,8 +146,6 @@ if __name__ == '__main__':
                 Data_writer.write_data_with_index(res_data, id.values.flatten(),
                                                   'TalkinSubmission'+key+str(end_p).replace('.','_')[:5]+'.csv',
                                                   columns=('is_attributed',),index_name='click_id')
-
-
 
 
 

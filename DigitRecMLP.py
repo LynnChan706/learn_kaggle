@@ -43,6 +43,7 @@ if __name__ == '__main__':
     predict = MLPClassifier(solver='lbfgs',alpha=1e-5,hidden_layer_sizes=(100,), random_state=5)
 
     predict.fit(train_images,train_labels)
+
     print('acc:{}'.format(predict.score(train_images, train_labels)))
     print('acc:{}'.format(predict.score(vali_images, vali_labels)))
     res_data = np.array(predict.predict(X_test))
